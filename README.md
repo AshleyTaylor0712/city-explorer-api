@@ -6,7 +6,9 @@
 
 ## Overview
 
-This project uses an API to add weather information to my city explorer site.
+- This project uses an API to add weather information to my city explorer site.
+
+- Trello: https://trello.com/b/xhB1Yfv3/week-2
 
 ## Getting Started
 
@@ -33,6 +35,6 @@ Estimate of time needed to complete:
 
 Start time: 12/10:30
 
-Finish time: 1/
+Finish time: 1/11:30
 
-Actual total time to complete:
+Actual total time to complete: 2 hrs
