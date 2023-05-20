@@ -15,6 +15,8 @@
 - Create Repo
 - Connect API
 - Get data from .json
+- ![Web Request Response Cycle](arthurscreen.png)
+- https://trello.com/b/fYZHhQDa/lab-5
 
 ## Architecture
 
@@ -24,17 +26,17 @@ Get data from .json storage and place within JS components that dispaly via reac
 
 - 05-19-2023 10:34am - Project repository in place.
 
-- 05-19-2023
-
 ## Credit and Collaborations
+
+Sheyna Watkins Class 301 Day 07, 08 Class Recording; Jared Ciccarello; Arthur Francisco;
 
 Name of feature: Lab 07
 
 Estimate of time needed to complete: 
 6 hrs
 
-Start time: 12/10:30
+Start time: 12am/10:30am/5pm/9pm
 
-Finish time: 1/11:30
+Finish time: 1am/11:30am/8pm/
 
-Actual total time to complete: 2 hrs
+Actual time to complete: 5 hrs
