@@ -35,8 +35,8 @@ Name of feature: Lab 07
 Estimate of time needed to complete: 
 6 hrs
 
-Start time: 12am/10:30am/5pm/9pm
+Start time: 12am/10:30am/5pm/9pm/1:30pm/5:30pm
 
-Finish time: 1am/11:30am/8pm/3:30am
+Finish time: 1am/11:30am/8pm/3:30am/2:30pm/7:30pm
 
-Actual time to complete: 11 hrs
+Actual time to complete: 14 hrs
