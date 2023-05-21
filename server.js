@@ -30,7 +30,9 @@ function weatherHandler(request, response) {
   console.log('Weatherdata', weatherData);
   //Setting to a variable. using .find to find the specific city that is being typed into search bar. When we hit enter it hits this function and checks to see if it matches our weather.json. city is the index at 0 bc its before the arrow
   const weatherRequest = weatherData.find(
-    city => city.city_name === request.query.searchQuery
+    //on right hand side is the data that we are sending from the front end
+    // on the left side is the value that is coming from weather.json
+    city => city.city_name.toLowerCase() === request.query.searchQuery.toLowerCase()
   );
   //if this is true (matches request we are typing into searchbar) lets map through the data and showcase desire results;
   if (weatherRequest) {
