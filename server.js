@@ -1,5 +1,7 @@
 'use strict';
 
+const axios = require('axios');
+
 //bringing in .env file
 require('dotenv').config();
 //making a new express var; require: like import
@@ -18,28 +20,61 @@ app.use(cors());
 //Creating an instance of weather data
 //will use this to match the city-name objects to the data.json
 //we want the weather data to match what we are searching for
-const weatherData = require('./data/weather.json');
+//const weatherData = require('./data/weather.json');
 
 //getting data from app/site from the weather route. The weather route kicks off th weather handler function. Need to access data to display object. this is why we have /weather. passing in the weatherhandler function.
+//app.get('/weather', weatherHandler);
+
+//this is where I'm taking in request/response for the weather request.
+
+
+  
+
+  //what goes in quotes is what is getting sent back to front end
+  //response.send('yay we made it weather function')
+
+//weatherHandler is the callback function for app.get for the weather route
 app.get('/weather', weatherHandler);
 
 //this is where I'm taking in request/response for the weather request.
-function weatherHandler(request, response) {
+async function weatherHandler(request, response) {
+
+//This is the request url:
+//This is the request that we recieved: 
+//http://localhost:3001/weather?searchQuery=Seattle&lat=47.6038321&lon=-122.330062
+
+// http://localhost:3001/weather?searchQuery=atlanta&lat=33.7489924&lon=-84.3902644
+
   //console logs for backend goterminal
-  console.log('the request', request);
-  console.log('Weatherdata', weatherData);
+  //request is an object and query is an object that is a property of request object
+  console.log('the request', request.query);
+  //request.query is what is coming in from the front end. Everything after the question mark in the url
+  //http://localhost:3001/weather?searchQuery=Seattle&lat=47.6038321&lon=-122.330062
+  //request.query = { 
+    //searchQuery: 'seattle', 
+    //lat: '47.6038321', 
+    //lon: '-122.330062' 
+  //}
+  //console.log('Weatherdata', weatherData);
+
+  //THIS IS WHERE WE ARE MAKING A URL FOR OUR REQUEST TO THE WEATHERBIT API
+
+  //this is the request that we are going to make
+  let url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHERBIT_API_KEY}&units=i&days=5&lat=${request.query.lat}&lon=${request.query.lon}`;
+  console.log(url);
+  //THIS IS WHERE I AM MAKING A REQUEST INTO AXIOS
+  let weatherData = await axios.get(url);
+  let weatherRequest = weatherData.data;
   //Setting to a variable. using .find to find the specific city that is being typed into search bar. When we hit enter it hits this function and checks to see if it matches our weather.json. city is the index at 0 bc its before the arrow
-  const weatherRequest = weatherData.find(
-    //on right hand side is the data that we are sending from the front end
-    // on the left side is the value that is coming from weather.json
-    city => city.city_name.toLowerCase() === request.query.searchQuery.toLowerCase()
-  );
+
   //if this is true (matches request we are typing into searchbar) lets map through the data and showcase desire results;
   if (weatherRequest) {
     //looking at all the objects
     const weatherArray = weatherRequest.data.map(
       //console.log(weatherRequest.data, 'weatherRequest');
-      forecast => new Forecast(forecast.valid_date, forecast.weather.description)
+      forecast => {
+        console.log(forecast);
+        return new Forecast(forecast.valid_date, forecast.weather.description)}
     );
     //sending info from weather request
     response.status(200).send(weatherArray);
