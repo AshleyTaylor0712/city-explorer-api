@@ -61,7 +61,7 @@ async function weatherHandler(request, response) {
 
   //this is the request that we are going to make
   let url = `http://api.weatherbit.io/v2.0/forecast/daily?key=${process.env.WEATHERBIT_API_KEY}&units=i&days=5&lat=${request.query.lat}&lon=${request.query.lon}`;
-  console.log(url);
+ 
   //THIS IS WHERE I AM MAKING A REQUEST INTO AXIOS
   let weatherData = await axios.get(url);
   let weatherRequest = weatherData.data;
@@ -73,7 +73,7 @@ async function weatherHandler(request, response) {
     const weatherArray = weatherRequest.data.map(
       //console.log(weatherRequest.data, 'weatherRequest');
       forecast => {
-        console.log(forecast);
+        
         return new Forecast(forecast.valid_date, forecast.weather.description)}
     );
     //sending info from weather request
@@ -92,25 +92,26 @@ class Forecast {
   }
 }
 
-app.get('/movie', movieHandler);
+app.get('/movies', movieHandler);
 
 //this is where I'm taking in request/response for the weather request.
 async function movieHandler(request, response) {
 
-  let movieUrl = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${city}`;
+  //The Green &query is the search value
+  //the request.query means the front end url (not always the front end in the wild)
+  let movieUrl = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${request.query.cityName}`;
 
   console.log(movieUrl);
   //THIS IS WHERE I AM MAKING A REQUEST INTO AXIOS
   let movieData = await axios.get(movieUrl);
   let movieRequest = movieData.data;
-
+  console.log('this is the movie request', movieRequest);
   if (movieRequest) {
     //looking at all the objects
-    const movieArray = movieRequest.data.results.map(
-      //console.log(weatherRequest.data, 'weatherRequest');
-      movie => {
-        console.log(movie);
-        return new Movie(movie.valid_date, movie.weather.description)}
+    const movieArray = movieRequest.results.map( movieObj =>  {
+      
+        return new Movie(movieObj)
+      }
     );
     //sending info from weather request
     response.status(200).send(movieArray);
@@ -119,18 +120,18 @@ async function movieHandler(request, response) {
 }
 //creating a class. targetting forcast from above from weather.json. This is a data holder that displays our date and description in our browser.
 class Movie {
-  constructor(movie) {
+  constructor(movieObj) {
     //creating new objects using the this. notation aka what you want to display on your screen
-    this.title = movie.original_title;
-    this.overview = movie.overview;
-    this.averageVotes = movie.vote_average;
-    this.totalVotes = movie.vote_count;
-    this.image_url = movie.poster_path;
-    this.popularity = movie.popularity;
-    this.releaseDate = movie.release_date;
+    this.title = movieObj.original_title;
+    this.overview = movieObj.overview;
+    this.averageVotes = movieObj.vote_average;
+    this.totalVotes = movieObj.vote_count;
+    //to see the image we need the full website with the path aka img website link
+    this.image_url = 'https://image.tmdb.org/t/p/w500' + movieObj.poster_path;
+    this.popularity = movieObj.popularity;
+    this.releaseDate = movieObj.release_date;
   }
 }
-app.get('/movie', movieHandler);
 
 //Routes are used to access endpoints
 // request is pulling data from front end.
