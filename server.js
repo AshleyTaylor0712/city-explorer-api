@@ -127,7 +127,7 @@ class Movie {
     this.averageVotes = movieObj.vote_average;
     this.totalVotes = movieObj.vote_count;
     //to see the image we need the full website with the path aka img website link
-    this.image_url = 'https://image.tmdb.org/t/p/w500' + movieObj.poster_path;
+    this.image_url = 'https://image.tmdb.org/t/p/w500/' + movieObj.poster_path;
     this.popularity = movieObj.popularity;
     this.releaseDate = movieObj.release_date;
   }
