@@ -48,8 +48,8 @@ Name of feature: Lab 08
 Estimate of time needed to complete: 
 3 hrs
 
-Start time: 6:30 pm/
+Start time: 6:30pm/
 
-Finish time: 
+Finish time: 12:30am/
 
 Actual time to complete: 
