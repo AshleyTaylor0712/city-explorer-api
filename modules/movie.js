@@ -3,11 +3,13 @@ const axios = require('axios');
 
 let cache = require('./cache.js');
 
-async function movieHandler(request, response) {
-
+let movieHandler = async (request, response, next) => {
+  let key = request.query.cityName + "data";
   //The Green &query is the search value
   //the request.query means the front end url (not always the front end in the wild)
   let movieUrl = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${request.query.cityName}`;
+
+  console.log(movieUrl);
 
   if (cache[key] && (Date.now() - cache[key].timestamp < 50000)) {
     console.log('Cache hit');
@@ -15,12 +17,12 @@ async function movieHandler(request, response) {
     console.log('Cache miss');
     cache[key] = {};
     cache[key].timestamp = Date.now();
-    let movieData = await axios.get(movieURL);
+    let movieData = await axios.get(movieUrl);
 
     try {
       cache[key].data = movieData.data.results;
-      let movieDataToSend = cache[key].data.map(object => {
-        return new Movies(object);
+      let movieDataToSend = cache[key].data.map(movieObj => {
+        return new Movie(movieObj);
       });
       response.status(200).send(movieDataToSend)
     } catch (error) {
@@ -29,21 +31,6 @@ async function movieHandler(request, response) {
   }
 };
 
-  console.log(movieUrl);
-  //THIS IS WHERE I AM MAKING A REQUEST INTO AXIOS
-  let movieData = await axios.get(movieUrl);
-  let movieRequest = movieData.data;
-  console.log('this is the movie request', movieRequest);
-  if (movieRequest) {
-    //looking at all the objects
-    const movieArray = movieRequest.results.map( movieObj =>  {
-      
-        return new Movie(movieObj)
-      }
-    );
-    //sending info from weather request
-    response.status(200).send(movieArray);
-  }
 
 //creating a class. targetting forcast from above from weather.json. This is a data holder that displays our date and description in our browser.
 class Movie {

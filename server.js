@@ -1,6 +1,6 @@
 'use strict';
 
-const axios = require('axios');
+//const axios = require('axios');
 
 //bringing in .env file
 require('dotenv').config();
@@ -9,7 +9,6 @@ const express = require('express');
 //cross origin resource sharing; who can I share date with?
 // cors secures data
 const cors = require('cors');
-const handleGetMovies = require('./modules/movie');
 const weatherHandler = require('./modules/weather');
 const movieHandler = require('./modules/movie');
 
@@ -40,7 +39,7 @@ app.get('/movies', movieHandler);
   //response.send('yay we made it weather function')
 
 //weatherHandler is the callback function for app.get for the weather route
-app.get('/weather', weatherHandler);
+//app.get('/weather', weatherHandler);
 
 //this is where I'm taking in request/response for the weather request.
 // async function weatherHandler(request, response) {
